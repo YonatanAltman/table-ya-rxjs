@@ -1,3 +1,5 @@
+
+
 export interface employee {
   id?: string;
   firstName?: string;
@@ -10,4 +12,3 @@ export interface tableData {
   lastName: string;
   email: string;
 }
-

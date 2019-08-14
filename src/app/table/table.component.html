@@ -1,0 +1,56 @@
+<div class="animated tdExpandInBounce">
+
+  <div class="mat-elevation-z8 container">
+
+    <div class="wind-table">
+      <div class="filter">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filter" placeholder="{{title.filter}}">
+          <button mat-button matSuffix
+                  matTooltip="{{title.tooltipClear}}"
+                  mat-icon-button aria-label="Clear"
+                  (click)="filter='';applyFilter('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="{{tableData.tableId}}Container" >
+        <table mat-table #table [dataSource]="dataSource" matSort class="{{tableData.tableId}}Table">
+          <ng-container matColumnDef="select">
+            <mat-header-cell *cdkHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()" color="primary">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *cdkCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)" color="primary">
+              </mat-checkbox>
+
+            </mat-cell>
+          </ng-container>
+          <!-- Star Column -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button mat-icon-button (click)="$event.stopPropagation();action($event,element)"><mat-icon>{{tableData.icon}}</mat-icon></button>
+
+            </mat-cell>
+          </ng-container>
+          <ng-container *ngFor="let column of tableData.columns" [cdkColumnDef]="column.columnDef">
+            <mat-header-cell mat-sort-header *cdkHeaderCellDef >{{ column.header }}</mat-header-cell>
+            <mat-cell *cdkCellDef="let row">{{ column.cell(row) }}</mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row);OnSelectedRow(row)" [class.current]="selection.isSelected(row)"></mat-row>
+        </table>
+
+      </div>
+      <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+
+
+</div>
