@@ -33,8 +33,10 @@ export class TableComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.tableData
-    this.SetDataSource();
+    this.tableData.items.subscribe(items => {
+    this.SetDataSource(items);
+
+    })
   }
   @Output() SelectedRow = new EventEmitter();
   @Output() ActionRow = new EventEmitter();
