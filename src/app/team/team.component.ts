@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {TableService} from './table.service';
+import { TableService } from './table.service';
 
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css'],
-  providers:[TableService]
+  providers: [TableService]
 })
 export class TeamComponent implements OnInit {
-
-  constructor() { }
+  dataSource: this.tbl.get();
+    constructor(private tbl: TableService) { }
 
   ngOnInit() {
+
   }
 
 }
